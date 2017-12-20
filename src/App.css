@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* @media only screen and (max-device-width: 500px) {
+  #debug {
+    display: none;
+  }
+} */
