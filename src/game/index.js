@@ -1,51 +1,40 @@
 import Game from 'boardgame.io/game'
+import { initialPosition } from '../constant'
+import { _hasZi, _equal } from '../util'
 
-const IsVictory = cells => {
-  const positions = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ]
-
-  for (let pos of positions) {
-    const symbol = cells[pos[0]]
-    let winner = symbol
-    for (let i of pos) {
-      if (cells[i] !== symbol) {
-        winner = null
-        break
-      }
-    }
-    if (winner != null) return true
-  }
-
-  return false
-}
-
-const TicTacToe = Game({
-  G: { cells: Array(9).fill(null), winner: null },
+const ChineseChecker = Game({
+  G: {
+    zis: initialPosition,
+    activeZi: [0, 6],
+    winner: null,
+  },
 
   moves: {
-    clickCell(G, ctx, id) {
-      const cells = [...G.cells]
-
-      if (cells[id] === null) {
-        cells[id] = ctx.currentPlayer
+    pick(G, ctx, position) {
+      // 如果没有子，或者已经处于选中状态
+      if (!_hasZi(position, G.zis) || G.activeZi) {
+        return G
       }
-
-      let winner = null
-      if (IsVictory(cells)) {
-        winner = ctx.currentPlayer
+      return { ...G, activeZi: position }
+    },
+    putBack(G, ctx) {
+      if (G.activeZi) {
+        return { ...G, activeZi: null }
       }
+      return G
+    },
+    move(G, ctx, position, isPossible) {
+      //如果有子，或者没有处于选中状态
+      if (_hasZi(position, G.zis) || !G.activeZi || !isPossible) {
+        return G
+      }
+      //删除旧位置，添加新位置
+      let newZis = G.zis.filter(z => !_equal(z, G.activeZi))
+      newZis = [...newZis, position]
 
-      return { ...G, cells, winner }
+      return { ...G, activeZi: null, zis: newZis }
     },
   },
 })
 
-export default TicTacToe
+export default ChineseChecker

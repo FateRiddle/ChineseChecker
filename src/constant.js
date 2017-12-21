@@ -15,11 +15,11 @@ const outier = [
   [-4 - 1, 4 * r + 1.4],
 ]
 
-export const outierPoints = outier
+export const boardOutier = outier
   .map(o => [o[0] + 16, o[1] + 18])
   .reduce((x, y) => x + ' ' + y, '')
 
-export const spots = [
+export const boardSpots = [
   [0, 8],
   [-1, 7],
   [1, 7],
@@ -141,4 +141,17 @@ export const spots = [
   [-1, -5],
   [1, -5],
   [3, -5],
+]
+
+export const initialPosition = [
+  [0, 8],
+  [-1, 7],
+  [1, 7],
+  [-2, 6],
+  [0, 6],
+  [2, 6],
+  [-3, 5],
+  [-1, 5],
+  [1, 5],
+  [3, 5],
 ]
