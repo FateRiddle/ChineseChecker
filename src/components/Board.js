@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import Circle from './Circle'
 import { boardSpots, boardOutier } from '../constant'
-import { _possibleSpots, _equal } from '../util'
+import { _possibleSpots, _equal, _hasZi } from '../util'
+import { getWinner } from '../game/winCondition'
 class Board extends Component {
-  hasZi = (position, zis) => {
-    let _hasZi = 0
-    for (let zi of zis) {
-      if (_equal(zi, position)) {
-        _hasZi = 1
-        break
-      }
+  getPositionInfo = position => {
+    const { zis } = this.props.G
+    if (_hasZi(position, zis)) {
+      return zis.find(z => _equal(z, position))
     }
-    return _hasZi
+    return [...position, null]
   }
 
   onRightClick = e => {
@@ -23,10 +21,10 @@ class Board extends Component {
   }
 
   render() {
-    const { G, moves } = this.props
+    const { G, moves, endTurn, ctx } = this.props
+    console.log(getWinner(G.zis))
     const otherZis = G.activeZi ? G.zis.filter(zi => !_equal(zi, G.activeZi)) : G.zis
     const possibleSpots = G.activeZi ? _possibleSpots(G.activeZi, otherZis) : []
-
     return (
       <div className="w-50 bg-gold">
         <svg
@@ -41,15 +39,15 @@ class Board extends Component {
             fill="transparent"
             strokeLinejoin="round"
           />
-          {boardSpots.map((position, index) => {
+          {boardSpots.map((barePosition, index) => {
             return (
               <Circle
                 key={index}
-                position={position}
-                hasZi={this.hasZi(position, G.zis)}
+                position={this.getPositionInfo(barePosition)} //如有子，带有该位置子信息：[1,2,playerID]
+                currentPlayer={ctx.currentPlayer}
                 activeZi={G.activeZi}
-                isPossible={this.hasZi(position, possibleSpots)}
-                moves={moves}
+                isPossible={_hasZi(barePosition, possibleSpots)} //此位置是否可能移动到
+                moves={{ ...moves, endTurn }}
               />
             )
           })}

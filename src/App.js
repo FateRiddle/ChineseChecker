@@ -7,6 +7,7 @@ var App = Client({
   board: Board,
   game: ChineseChecker,
   // debug: false,
+  // multiplayer: true,
 })
 
 export default App

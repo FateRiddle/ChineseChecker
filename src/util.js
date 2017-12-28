@@ -17,6 +17,7 @@ export const _hasZi = (position, zis) => {
   }
   return hasZi
 }
+
 // 辅助函数  3, -2 => [2,1,0,-1]
 const _arrayFrom = (a, b, step = 1) => {
   let arr = []
@@ -39,7 +40,7 @@ const _closest = (position, zis) => {
     return position
   }
   const newZis = zis
-    .map(zi => [...zi, Math.abs(zi[0] - x) + Math.abs(zi[1] - y)])
+    .map(zi => [zi[0], zi[1], Math.abs(zi[0] - x) + Math.abs(zi[1] - y)])
     .sort((z1, z2) => z1[2] > z2[2])
   let result = newZis[0]
   return [result[0], result[1]]
@@ -139,7 +140,6 @@ export const _possibleSpots = (position, zis) => {
     .reduce((arr1, arr2) => [...arr1, ...arr2], [])
   newSpots = _mergeArr(spots, newSpots).filter(p => !_equal(p, position))
   while (newSpots.length > spots.length) {
-    console.log(newSpots.length, spots.length)
     spots = [...newSpots]
     newSpots = spots
       .map(p => _onePossible(p, zis))

@@ -1,35 +1,43 @@
 import React, { Component } from 'react'
 import { _equal } from '../util'
 
-const r = Math.sqrt(3)
-
 class Circle extends Component {
-  state = {
-    moveHint: false,
+  handleClick = () => {
+    const { position, isPossible, moves, currentPlayer, activeZi } = this.props
+    if (position[2] === currentPlayer) {
+      moves.pick(position)
+    } else if (position[2] == null && activeZi) {
+      moves.move(position, isPossible)
+      moves.endTurn()
+    }
   }
 
-  handleClick = () => {
-    const { position, hasZi, isPossible, moves } = this.props
-    if (hasZi !== 0) {
-      moves.pick(position)
-    } else {
-      moves.move(position, isPossible)
+  getFillColor = () => {
+    const { position, activeZi } = this.props
+    const isActive = _equal(position, activeZi)
+    switch (position[2]) {
+      case '0':
+        if (isActive) return 'crimson'
+        return 'lightCoral'
+      case '1':
+        if (isActive) return 'lime'
+        return 'darkTurquoise'
+      default:
+        return 'white'
     }
   }
 
   render() {
-    const { scale = 1, position, hasZi = 0, activeZi, isPossible } = this.props
-    const isActive = _equal(position, activeZi)
-    const fillColor = hasZi === 0 ? 'white' : isActive ? 'orange' : 'red'
+    const { scale = 1, position, activeZi, isPossible } = this.props
     const [x, y] = position
     return (
       <circle
-        className={hasZi === 0 ? '' : 'hasZi'}
+        // className={position[2] === this.props.currentPlayer ? 'myZi' : ''}
         onClick={this.handleClick}
         cx={`calc(16 + ${x * scale})`}
-        cy={`calc(18 + ${y * r * scale})`}
+        cy={`calc(18 + ${y * Math.sqrt(3) * scale})`}
         r={`${0.8 * scale}`}
-        fill={fillColor}
+        fill={this.getFillColor()}
         stroke={activeZi && isPossible ? 'gray' : ''}
         strokeWidth=".1"
         strokeDasharray=".3"
