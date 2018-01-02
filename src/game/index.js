@@ -2,6 +2,7 @@ import Game from 'boardgame.io/game'
 import { _equal } from '../util'
 import { init2P } from '../constant'
 import { getWinner } from './winCondition'
+
 const ChineseChecker = Game({
   setup: numPlayers => ({
     activeZi: null,
@@ -31,11 +32,31 @@ const ChineseChecker = Game({
       newZis = [...newZis, [position[0], position[1], G.activeZi[2]]]
       return { ...G, activeZi: null, zis: newZis }
     },
-    victory: (G, ctx) => {
-      getWinner(G.zis)
-      return ctx.currentPlayer
+    restart(G, ctx) {
+      return {
+        activeZi: null,
+        zis: [...init2P[0], ...init2P[1]],
+      }
     },
   },
+
+  victory: (G, ctx) => {
+    return getWinner(G.zis)
+  },
+
+  // flow: (ctx, action, G) => {
+  //   switch (action.type) {
+  //     case 'RESTART':
+  //       return {
+  //         ...ctx,
+  //         turn: 0,
+  //         currentPlayer: '0',
+  //         winner: null,
+  //       }
+  //     default:
+  //       return ctx
+  //   }
+  // },
 })
 
 export default ChineseChecker

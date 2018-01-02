@@ -248,6 +248,10 @@ arraybuffer.slice@0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/arraybuffer.slice/download/arraybuffer.slice-0.0.6.tgz#f33b2159f0532a3f3107a272c0ccfbd1ad2979ca"
 
+arraybuffer.slice@~0.0.7:
+  version "0.0.7"
+  resolved "http://registry.npm.taobao.org/arraybuffer.slice/download/arraybuffer.slice-0.0.7.tgz#3bbc4275dd584cc1b10809b89d4e8b63a69e7675"
+
 arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/arrify/download/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
@@ -1064,9 +1068,9 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "http://registry.npm.taobao.org/bn.js/download/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
 
-boardgame.io@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/boardgame.io/-/boardgame.io-0.14.0.tgz#52b8ef1ac7ceb4ad54ec47070f2cc0527f385d78"
+boardgame.io@^0.15.0:
+  version "0.15.0"
+  resolved "http://registry.npm.taobao.org/boardgame.io/download/boardgame.io-0.15.0.tgz#35da615ae7d69d57393f892f52481629c71d95e1"
   dependencies:
     koa "^2.3.0"
     koa-router "^7.2.1"
@@ -2179,11 +2183,11 @@ engine.io-parser@1.2.4:
     utf8 "2.1.0"
 
 engine.io-parser@~2.1.0, engine.io-parser@~2.1.1:
-  version "2.1.1"
-  resolved "http://registry.npm.taobao.org/engine.io-parser/download/engine.io-parser-2.1.1.tgz#e0fb3f0e0462f7f58bb77c1a52e9f5a7e26e4668"
+  version "2.1.2"
+  resolved "http://registry.npm.taobao.org/engine.io-parser/download/engine.io-parser-2.1.2.tgz#4c0f4cff79aaeecbbdcfdea66a823c6085409196"
   dependencies:
     after "0.8.2"
-    arraybuffer.slice "0.0.6"
+    arraybuffer.slice "~0.0.7"
     base64-arraybuffer "0.1.5"
     blob "0.0.4"
     has-binary2 "~1.0.2"
@@ -3531,8 +3535,8 @@ is-fullwidth-code-point@^2.0.0:
   resolved "http://registry.npm.taobao.org/is-fullwidth-code-point/download/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
 
 is-generator-function@^1.0.3:
-  version "1.0.6"
-  resolved "http://registry.npm.taobao.org/is-generator-function/download/is-generator-function-1.0.6.tgz#9e71653cd15fff341c79c4151460a131d31e9fc4"
+  version "1.0.7"
+  resolved "http://registry.npm.taobao.org/is-generator-function/download/is-generator-function-1.0.7.tgz#d2132e529bb0000a7f80794d4bdf5cd5e5813522"
 
 is-glob@^2.0.0, is-glob@^2.0.1:
   version "2.0.1"
@@ -5609,8 +5613,8 @@ react-error-overlay@^3.0.0:
   resolved "http://registry.npm.taobao.org/react-error-overlay/download/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
 react-json-view@^1.13.0:
-  version "1.14.0"
-  resolved "http://registry.npm.taobao.org/react-json-view/download/react-json-view-1.14.0.tgz#c4b2b50c99a5b28c926e9bd670b096a390cdc29f"
+  version "1.15.2"
+  resolved "http://registry.npm.taobao.org/react-json-view/download/react-json-view-1.15.2.tgz#3d7b90bd89f4671f658f5c8fd84cdc15f95d4b5b"
   dependencies:
     flux "^3.1.3"
     react-base16-styling "^0.5.3"

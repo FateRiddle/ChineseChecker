@@ -72,8 +72,6 @@ const _noBetween = (p1, p2, zis) => {
 //计算一步可能到达点
 const _onePossible = (position, zis) => {
   const [x, y] = position
-  let result = []
-
   //找到跳点
   let group = []
   let hopSpots = []
@@ -98,9 +96,8 @@ const _onePossible = (position, zis) => {
   landSpots = landSpots.filter(
     (p, i) => !_hasZi(p, zis) && _hasZi(p, boardSpots) && _noBetween(p, hopSpots[i], zis)
   )
-  result = [...result, ...landSpots]
 
-  return result
+  return landSpots
 }
 //合并两个数组，并去重（两个数组本身都没有重复）
 const _mergeArr = (arr1, arr2) => {

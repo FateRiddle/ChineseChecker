@@ -3,10 +3,13 @@ import { _equal } from '../util'
 
 class Circle extends Component {
   handleClick = () => {
-    const { position, isPossible, moves, currentPlayer, activeZi } = this.props
-    if (position[2] === currentPlayer) {
+    const { position, isPossible, moves, ctx = {}, activeZi } = this.props
+    if (ctx.winner) {
+      return
+    }
+    if (position[2] === ctx.currentPlayer) {
       moves.pick(position)
-    } else if (position[2] == null && activeZi) {
+    } else if (position[2] == null && activeZi && isPossible) {
       moves.move(position, isPossible)
       moves.endTurn()
     }
@@ -28,11 +31,15 @@ class Circle extends Component {
   }
 
   render() {
-    const { scale = 1, position, activeZi, isPossible } = this.props
+    const { scale = 1, position, activeZi, isPossible, ctx = {} } = this.props
     const [x, y] = position
     return (
       <circle
-        // className={position[2] === this.props.currentPlayer ? 'myZi' : ''}
+        className={`${
+          (position[2] === ctx.currentPlayer && !ctx.winner) || isPossible
+            ? 'pointer'
+            : ''
+        }`}
         onClick={this.handleClick}
         cx={`calc(16 + ${x * scale})`}
         cy={`calc(18 + ${y * Math.sqrt(3) * scale})`}
