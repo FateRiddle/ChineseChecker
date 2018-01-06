@@ -3,6 +3,13 @@ import Circle from './Circle'
 import { boardSpots, boardOutier } from '../constant'
 import { _possibleSpots, _equal, _hasZi } from '../util'
 class Board extends Component {
+  componentWillReceiveProps = nextProps => {
+    const deepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b)
+    if (!deepEqual(this.props.G.zis, nextProps.G.zis)) {
+      // console.log('hahaha')
+    }
+  }
+
   getPositionInfo = position => {
     const { zis } = this.props.G
     if (_hasZi(position, zis)) {
@@ -25,7 +32,6 @@ class Board extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { G, moves, endTurn, ctx } = this.props
     const otherZis = G.activeZi ? G.zis.filter(zi => !_equal(zi, G.activeZi)) : G.zis
     const possibleSpots = G.activeZi ? _possibleSpots(G.activeZi, otherZis) : []
