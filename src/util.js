@@ -99,12 +99,18 @@ const _onePossible = (position, zis) => {
 
   return landSpots
 }
+
+const _onePossiblePath = (path, zis) => {
+  const spots = _onePossible(path[0], zis)
+  return spots.map(s => [s, ...path])
+}
+
 //合并两个数组，并去重（两个数组本身都没有重复）
-const _mergeArr = (arr1, arr2) => {
+const _mergePath = (arr1, arr2) => {
   const newArr2 = arr2.filter(a2 => {
     let isNew = true
     arr1.forEach(a1 => {
-      if (_equal(a1, a2)) {
+      if (_equal(a1[0], a2[0])) {
         isNew = false
       }
     })
@@ -114,10 +120,10 @@ const _mergeArr = (arr1, arr2) => {
 }
 
 //所有可能跳到的位置
-export const _possibleSpots = (position, zis) => {
+export const _possiblePath = (position, zis) => {
   //可以移动到的位置
   const [x, y] = position
-  let moveSpots = [
+  const moveSpots = [
     [x - 2, y],
     [x + 2, y],
     [x - 1, y - 1],
@@ -125,24 +131,24 @@ export const _possibleSpots = (position, zis) => {
     [x - 1, y + 1],
     [x + 1, y + 1],
   ]
-  moveSpots = moveSpots.filter(p => !_hasZi(p, zis))
+  const movePaths = moveSpots.filter(p => !_hasZi(p, zis)).map(m => [m, position])
 
-  let spots = _onePossible(position, zis)
-  if (spots.length === 0) {
-    return moveSpots
+  let paths = _onePossiblePath([position], zis)
+  if (paths.length === 0) {
+    return movePaths
   }
   // return spots
-  let newSpots = spots
-    .map(p => _onePossible(p, zis))
+  let newPaths = paths
+    .map(p => _onePossiblePath(p, zis))
     .reduce((arr1, arr2) => [...arr1, ...arr2], [])
-  newSpots = _mergeArr(spots, newSpots).filter(p => !_equal(p, position))
-  while (newSpots.length > spots.length) {
-    spots = [...newSpots]
-    newSpots = spots
-      .map(p => _onePossible(p, zis))
+  newPaths = _mergePath(paths, newPaths).filter(p => !_equal(p[0], position))
+  while (newPaths.length > paths.length) {
+    paths = [...newPaths]
+    newPaths = paths
+      .map(p => _onePossiblePath(p, zis))
       .reduce((arr1, arr2) => [...arr1, ...arr2], [])
-    newSpots = _mergeArr(spots, newSpots).filter(p => !_equal(p, position))
+    newPaths = _mergePath(paths, newPaths).filter(p => !_equal(p, position))
   }
 
-  return [...moveSpots, ...spots]
+  return [...movePaths, ...paths]
 }

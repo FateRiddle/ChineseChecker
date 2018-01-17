@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Circle from './Circle'
+import Zi from './Zi'
 import { boardSpots, boardOutier } from '../constant'
-import { _possibleSpots, _equal, _hasZi } from '../util'
+import { _possiblePath, _equal, _hasZi } from '../util'
+
 class Board extends Component {
   componentWillReceiveProps = nextProps => {
     const deepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b)
@@ -9,6 +11,8 @@ class Board extends Component {
       // console.log('hahaha')
     }
   }
+
+  componentDidMount = () => {}
 
   getPositionInfo = position => {
     const { zis } = this.props.G
@@ -33,8 +37,7 @@ class Board extends Component {
 
   render() {
     const { G, moves, endTurn, ctx } = this.props
-    const otherZis = G.activeZi ? G.zis.filter(zi => !_equal(zi, G.activeZi)) : G.zis
-    const possibleSpots = G.activeZi ? _possibleSpots(G.activeZi, otherZis) : []
+
     return (
       <div className="w-75 mw7">
         <svg
@@ -77,21 +80,39 @@ class Board extends Component {
             fill="transparent"
             strokeLinejoin="round"
           />
-          {boardSpots.map((barePosition, index) => {
+          {boardSpots.map((position, index) => {
+            const otherZis = G.activeZi
+              ? G.zis.filter(zi => !_equal(zi, G.activeZi))
+              : G.zis
+            const possiblePaths = G.activeZi ? _possiblePath(G.activeZi, otherZis) : []
+            const possibleSpots = possiblePaths.map(p => p[0])
+            const path = possiblePaths.find(p => _equal(p[0], position))
             return (
               <Circle
                 key={index}
-                position={this.getPositionInfo(barePosition)} //如有子，带有该位置子信息：[1,2,playerID]
+                position={position}
+                ctx={ctx} //判断是否pointer光标
+                G={G} // 判断是否描边指示可行位置activeZi, moving
+                isPossible={_hasZi(position, possibleSpots)} //此位置是否可能移动到
+                path={path}
+                moves={{ ...moves, endTurn }}
+              />
+            )
+          })}
+          {G.zis.map((position, index) => {
+            return (
+              <Zi
+                key={index}
+                position={position} //如有子，带有该位置子信息：[1,2,playerID]
                 ctx={ctx}
                 activeZi={G.activeZi}
-                isPossible={_hasZi(barePosition, possibleSpots)} //此位置是否可能移动到
                 moves={{ ...moves, endTurn }}
               />
             )
           })}
         </svg>
         <span className="dib ma3">
-          Click to pick a piece & move. Right click to cancle selection.
+          Click to pick a piece & move. Right click to cancel selection.
         </span>
         <span>
           <span
