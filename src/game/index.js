@@ -7,6 +7,7 @@ const ChineseChecker = Game({
   setup: numPlayers => ({
     activeZi: null,
     zis: [...init2P[0], ...init2P[1]],
+    moving: false,
   }),
 
   moves: {
@@ -32,11 +33,8 @@ const ChineseChecker = Game({
       newZis = [...newZis, [position[0], position[1], G.activeZi[2]]]
       return { ...G, activeZi: null, zis: newZis }
     },
-    restart(G, ctx) {
-      return {
-        activeZi: null,
-        zis: [...init2P[0], ...init2P[1]],
-      }
+    toggleMoving(G, ctx) {
+      return { ...G, moving: !G.moving }
     },
   },
 
