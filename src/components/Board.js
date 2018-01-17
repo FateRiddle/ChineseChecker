@@ -91,7 +91,7 @@ class Board extends Component {
           })}
         </svg>
         <span className="dib ma3">
-          Click to pick a piece & move. Right click to cancle selection.
+          Click to pick a piece & move. Right click to cancel selection.
         </span>
         <span>
           <span
