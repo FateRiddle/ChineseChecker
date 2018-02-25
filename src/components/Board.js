@@ -48,7 +48,7 @@ class Board extends Component {
           {// show winner and restart option when game ends
           ctx.winner && (
             <g>
-              <Circle position={[-13, -9, ctx.winner]} />
+              <Zi position={[-13, -9, ctx.winner]} />
               <text x="4.5" y="3" style={{ fontSize: '2px' }}>
                 wins!
               </text>
